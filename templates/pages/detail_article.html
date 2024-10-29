@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+{% block title %} Accueil {% endblock title %}
+
+{% block content %}
+<div class="container py-4">
+    <img src="{{article.image.url}}" width="500" height="250" alt="...">
+    <div class="row">
+            <div class="card-body">
+                <h5 class="card-title">{{article.title}}</h5>
+                <p class="card-text">{{article.body|safe}}</p>
+                <p class="card-text">Publie le : {{article.created_at |date:'d/m/y'}} par <strong>{{article.author|capfirst}}</strong></p>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
