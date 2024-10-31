@@ -7,8 +7,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
-
-    def create_user(self, username, email=None, password=None, **extra_fields):
+    def create_user(self, username, first_name=None,last_name=None, email=None, password=None, **extra_fields):
         if not username:
             raise ValueError("The given username must be set")
         
@@ -17,7 +16,7 @@ class UserManager(BaseUserManager):
         
         email = self.normalize_email(email)
 
-        user = self.model(username=username, email=email, **extra_fields)
+        user = self.model(username=username, first_name=first_name, last_name=last_name, email=email, **extra_fields)
 
         user.set_password(password)
 
@@ -90,7 +89,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email" # utilisation email au lieu de username
-    REQUIRED_FIELDS = ["username","first_name","last_name",]
+    REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = _("user")

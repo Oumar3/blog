@@ -2,5 +2,9 @@
 {% block title %} Accueil {% endblock title %}
 
 {% block content %}
-Creer votre compte ici
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">S'inscrire</button>
+</form>
 {% endblock content %}
