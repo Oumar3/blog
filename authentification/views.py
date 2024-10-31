@@ -23,19 +23,19 @@ def logout_view(request):
 
     return redirect('blogapp:home')
 
-class RegisterView(View):
+# class RegisterView(View):
 
-    def get(self, request, *args, **kwargs):
-        form = RegisterForm()
-        return render(request, 'register.html', {'form': form})
+#     def get(self, request, *args, **kwargs):
+#         form = RegisterForm()
+#         return render(request, 'register.html', {'form': form})
     
 
-    def post(self, request, *args, **kwargs):
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('auth:loginin')
-        return self.get(request, *args, **kwargs)
+#     def post(self, request, *args, **kwargs):
+#         form = RegisterForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('auth:loginin')
+#         return self.get(request, *args, **kwargs)
     
 
 def registerform(request, *args, **kwargs):
@@ -58,9 +58,12 @@ def registerform(request, *args, **kwargs):
         if password != password2:
             messages.error(request,'Le deux mot de passe sont different')
             return render(request, 'register1.html')
-        user = CustomUser.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email)
-        user.set_password(password)
-        user.save()
-        messages.success(request, "Inscription réussie !")
-        return redirect('auth:loginin')
+        try:
+            user = CustomUser.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email,password=password)
+        except:
+            messages.success(request, "User not created...")
+            return render(request, 'register1.html')
+        if user is not None:
+            messages.success(request, "Inscription réussie !")
+            return redirect('auth:loginin')
     return render(request,'register1.html')
