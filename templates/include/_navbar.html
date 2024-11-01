@@ -9,6 +9,9 @@
         <li class="nav-item active">
           <a class="nav-link nav-link-color" style="color: white" href="{% url "blogapp:home" %}">Articles </a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link nav-link-color" style="color: white" href="{% url "product:home" %}">Product </a>
+        </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" style="color: white" href="#">Create-Article</a>
