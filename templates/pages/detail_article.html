@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container py-4">
-    <img src="{{article.image.url}}" width="500" height="250" alt="...">
+    <img src="{{article.get_image}}" width="500" height="250" alt="...">
     <div class="row">
             <div class="card-body">
                 <h5 class="card-title">{{article.title}}</h5>

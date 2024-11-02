@@ -14,6 +14,11 @@ class Article(models.Model):
     def get_detail_article_url(self):
         return reverse("blogapp:detail-article", kwargs={"pk": self.pk})
     
+    def get_image(self):
+        if self.image:
+            return self.image.url
+        return None
+    
     
     def __str__(self):
         return self.title
