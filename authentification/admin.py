@@ -1,7 +1,7 @@
 from django.contrib import admin
-
+# from django.contrib.auth.models import Permission,Group
 # Register your models here.
-from .models import CustomUser
+from .models import CustomUser,Permission,Group
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
     
@@ -45,3 +45,18 @@ class UserAdmin(admin.ModelAdmin):
         "groups",
         "user_permissions",
     )
+
+
+# Personnaliser l'affichage dans l'admin pour lier les permissions
+@admin.register(Permission)
+class PermissionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'content_type', 'codename')
+    search_fields = ('name', 'codename')
+
+# Personnaliser l'admin de Groupes pour y afficher les permissions personnalisées
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    filter_horizontal = ('permissions',)  # Pour afficher les permissions de manière plus simple
+
+# admin.site.unregister(Group)
+# admin.site.register(Group, GroupAdmin)

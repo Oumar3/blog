@@ -1,9 +1,47 @@
-from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager,Permission,Group
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.contrib.contenttypes.models import ContentType
+
+
+class Permission(models.Model):
+    name = models.CharField(_("name"), max_length=255)
+    content_type = models.ForeignKey(
+        ContentType,
+        models.CASCADE,
+        verbose_name=_("content type"),
+        related_name="authentification_permissions",
+    )
+    codename = models.CharField(_("codename"), max_length=100)
+
+    class Meta:
+        verbose_name = _("permission")
+        verbose_name_plural = _("permissions")
+        unique_together = [["content_type", "codename"]]
+        ordering = ["content_type__app_label", "content_type__model", "codename"]
+
+    def __str__(self):
+        return "%s | %s" % (self.content_type, self.name)
+
+
+class Group(models.Model):
+    name = models.CharField(_("name"), max_length=150, unique=True)
+    permissions = models.ManyToManyField(
+        Permission,
+        verbose_name=_("permissions"),
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = _("group")
+        verbose_name_plural = _("groups")
+
+    def __str__(self):
+        return self.name
+
 
 class UserManager(BaseUserManager):
     use_in_migrations = True

@@ -106,6 +106,8 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'authentification.CustomUser'
+AUTH_PERMISSION_MODEL = 'authentification.Permission'
+AUTH_PERMISSION_MODEL = 'authentification.Group'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
