@@ -29,6 +29,9 @@ class blogListView(View):
             'articles':queryset
         }
         return render(request,self.template_name,context)
+
+
+        
 class detail_article_views(DetailView):
     model = Article
     template_name = 'pages/detail_article.html'
